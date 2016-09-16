@@ -84,6 +84,7 @@ export default class AntTools extends Component {
                         handler={keyCodes => {
                             actions.setTurns(keyCodes.map(keyCode => KeyMap[keyCode]));
                         }}
+                        filter={keyCode => KeyMap.hasOwnProperty(keyCode)}
                     />
                 </Group>
                 <Player
