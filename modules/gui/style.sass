@@ -1,0 +1,225 @@
+// TODO: split on files, create constants and mixins
+
+.row
+    background-color: hsla(230, 0%, 10%, 1)
+    display: flex
+    -webkit-user-select: none
+    -moz-user-select: none
+
+
+.confirmation
+    display: flex
+    .accept, .discard
+        display: flex
+        align-items: center
+        cursor: pointer
+        padding: 8px 10px
+
+        .indicator
+            width: 8px
+            height: 8px
+            border-radius: 100%
+            background: rgba(white, 0.5)
+
+    .accept
+        &:hover .indicator.active
+            box-shadow: 0 0 0px 4px rgba(0, 255, 130, 0.2)
+        .indicator.active
+            background: rgb(0, 255, 130)
+
+    .discard
+        &:hover .active + .current-value
+            color: white
+        &:hover .indicator.active
+            box-shadow: 0 0 0px 4px rgba(255, 111, 0, 0.2)
+        .indicator.active
+            background: rgb(255, 111, 0)
+
+    .current-value
+        color: rgba(white, 0.5)
+        width: 40px
+        padding-left: 12px
+        text-overflow: ellipsis
+        overflow: hidden
+
+.label
+    color: white
+    padding: 8px 10px
+    flex: 0 0 80px
+    cursor: default
+
+.text
+    color: white
+    padding: 8px 10px
+    flex: 1 0 40px
+
+.trackbar
+    flex: 1 40px
+    display: flex
+    margin: 4px
+
+    .bar
+        display: flex
+        flex: 1
+        background: rgba(255,255,255,0.2)
+        cursor: pointer
+
+        .progress
+            background: rgb(82, 116, 255)
+
+
+.input
+    flex: 1 0 40px
+    display: block
+    margin: 4px
+    padding: 4px 6px
+    border: none
+    background: rgba(255,255,255,0.2)
+    color: white
+    outline: none
+    box-sizing: border-box
+
+    &.invalid
+        input
+            color: #FF6C7D
+
+.button
+    color: rgb(82, 116, 255)
+    padding: 8px 10px
+    flex: 1
+    cursor: pointer
+
+    &:hover
+        background: rgba(82, 116, 255, 0.2)
+
+
+.checkbox
+    $height: 16px
+    $width: 40px
+
+    flex: 1 0 40px
+    justify-content: center
+    align-items: center
+    display: flex
+    padding: 4px
+    cursor: pointer
+
+    .flag
+        width: $width
+        height: $height
+        background: rgba(255,255,255,0.2)
+        position: relative
+        overflow: hidden
+        border-radius: $height
+        transform: translate3d(0,0,0)
+
+        &::before, &::after
+            // transition: 0.1s linear
+            content: ''
+            display: block
+            position: absolute
+            height: 100%
+
+        &::before
+            background: rgb(82, 116, 255)
+            width: 100%
+            transform: translateX(($height / 2) - $width)
+
+        &::after
+            background: white
+            width: $height
+            height: $height
+            border-radius: 100%
+            transform: translateX(0)
+
+    &.checked
+        .flag
+            &::before
+                transform: translateX(-($height / 2))
+            &::after
+                transform: translateX($width - $height)
+
+.group
+    font-size: 12px
+    font-family: sans-serif
+    max-width: 400px
+    background-color: hsla(230, 0%, 10%, 1)
+
+    &:hover
+        > .head
+            background: rgba(255, 255, 255, 0.05)
+
+    > .head
+        color: white
+        padding: 8px 10px
+        cursor: pointer
+        display: flex
+        align-items: center
+        -webkit-user-select: none
+        -moz-user-select: none
+
+        .color
+            background: rgba(255, 255, 255, 0.1)
+            width: 10px
+            height: 10px
+            margin-right: 10px
+
+    > .items
+        box-shadow: 0 -1px rgba(255, 255, 255, 0.1)
+        padding: 10px 0 10px 10px
+        overflow: hidden
+        display: none
+
+    &.expanded > .items
+        display: block
+        overflow: visible
+
+.select
+    flex: 1 40px
+    position: relative
+    margin: 4px
+    outline: none
+
+    > .head
+        padding: 4px 6px
+        background: rgba(255,255,255,0.2)
+        color: white
+        cursor: pointer
+        -webkit-user-select: none
+        -moz-user-select: none
+
+    > .items
+        position: absolute
+        background: #525252
+        width: 100%
+        padding: 4px 0
+
+        > .item
+            color: white
+            padding: 4px 6px
+            cursor: pointer
+
+            &:hover
+                background: rgba(82, 116, 255, 0.5)
+
+
+            &.selected
+                background: rgba(82, 116, 255, 1)
+
+.key-handler
+    flex: 1
+    // padding: 4px 6px
+    // border-radius: 4px
+    // margin: 4px 4px
+    // color: white
+    padding: 8px 10px
+    color: rgb(82, 116, 255)
+    outline: none
+    cursor: pointer
+
+    &:hover
+        background: rgba(82, 116, 255, 0.2)
+
+    &.active
+        background: rgba(82, 116, 255, 1)
+        color: white
