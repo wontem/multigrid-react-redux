@@ -28,3 +28,8 @@ export default function keyMirror(keys, transform) {
 
     return mirror;
 }
+
+export function checkNamespace(key, namespace) {
+    const regExp = new RegExp(`.*@${namespace}$`);
+    return regExp.test(key);
+}

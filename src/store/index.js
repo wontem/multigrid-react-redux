@@ -1,4 +1,5 @@
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import appReducer from 'reducers';
-// TODO: add middleware to reset state if grid changes
-export default createStore(appReducer);
+import resetTools from 'middleware/tools_middleware';
+
+export default createStore(appReducer, applyMiddleware(resetTools));
