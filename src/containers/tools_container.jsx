@@ -6,15 +6,12 @@ import CanvasTools from 'containers/tools/canvas_tools';
 import GridsTools from 'containers/tools/grids_tools';
 import AntTools from 'containers/tools/ant_tools';
 
+import './tools_container.sass';
+
 export default class Tools extends PureComponent {
     render() {
         return (
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: 400,
-            }}>
+            <div className="tools-container">
                 <CanvasTools />
                 <GridsTools />
                 <GolTools />
