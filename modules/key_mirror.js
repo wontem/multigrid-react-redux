@@ -30,6 +30,6 @@ export default function keyMirror(keys, transform) {
 }
 
 export function checkNamespace(key, namespace) {
-    const regExp = new RegExp(`.*@${namespace}$`);
+    const regExp = new RegExp(`^${namespace}@`);
     return regExp.test(key);
 }

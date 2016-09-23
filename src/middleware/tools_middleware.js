@@ -7,7 +7,7 @@ import {clearPopulation as resetGol} from 'actions/gol_actions';
 const resetTools = () => next => action => {
     let result = next(action);
 
-    if (checkNamespace(gridsNS)) {
+    if (checkNamespace(action.type, gridsNS)) {
         result = next(resetAnts());
         result = next(resetGol());
     }
