@@ -19,8 +19,9 @@ import {
     eachPairOfMaps,
 } from 'helpers/collections_helpers';
 
-export const grids = state => state.grids.get('grids');
-export const ranges = state => state.grids.get('ranges');
+import {NAMESPACE} from 'constants/grids_constants';
+
+export const grids = state => state[NAMESPACE];
 
 export const gridIds = createSelector([grids], grids => {
     return [...grids.keys()];
@@ -29,18 +30,18 @@ export const gridIds = createSelector([grids], grids => {
 export const unitVectors = createSelector([grids], grids => grids.map(getUnitVector));
 
 export const lines = createSelector(
-    [grids, ranges],
-    (grids, ranges) => {
+    [grids],
+    (grids) => {
         return grids.map((grid, gridId) => {
-            return getLines(grid, ranges.get(gridId));
+            return getLines(grid);
         });
     }
 );
 
 
 export const intersections = createSelector(
-    [gridIds, unitVectors, lines, grids, ranges],
-    (gridIds, unitVectors, lines, grids, ranges) => {
+    [gridIds, unitVectors, lines, grids],
+    (gridIds, unitVectors, lines, grids) => {
         console.time('intersections');
         const intersections = Immutable.Map().withMutations(intersections => {
             eachPairOfArray(gridIds, (gridId1, gridId2) => {
@@ -61,7 +62,7 @@ export const intersections = createSelector(
                             point,
                         };
 
-                        if (!isOverflow(gridIds, grids, ranges, intersection)) {
+                        if (!isOverflow(gridIds, grids, intersection)) {
                             intersections.set(getId(coord), intersection);
                         }
                     }

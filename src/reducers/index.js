@@ -8,9 +8,11 @@ import gol from 'reducers/gol_reducer';
 import path from 'reducers/path_reducer';
 import maze from 'reducers/maze_reducer';
 
+import {NAMESPACE as gridsNS} from 'constants/grids_constants';
+
 export default createCombinedReducer({
+    [gridsNS]: grids,
     enviroment,
-    grids,
     canvas,
     gol,
     ant,

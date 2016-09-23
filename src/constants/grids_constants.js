@@ -1,12 +1,13 @@
 import keyMirror from 'key_mirror';
 
+export const NAMESPACE = 'grids';
 export const ActionTypes = keyMirror([
     'CREATE_GRIDS',
     'ADD_GRID',
     'SET_SHIFT',
     'SET_INTERVAL',
     'SET_ANGLE',
-], 'grids');
+], NAMESPACE);
 
 export const Groups = keyMirror([
     'TILES',

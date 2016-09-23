@@ -26,9 +26,9 @@ export function getLine({p, phi, interval}, id) {
     };
 }
 
-export function getLines(grid, {firstLineId, lastLineId}) {
+export function getLines(grid) {
     return Immutable.Map().withMutations(lines => {
-        for (let id = firstLineId; id <= lastLineId; id++) {
+        for (let id = grid.firstLineId; id <= grid.lastLineId; id++) {
             lines.set(id, getLine(grid, id));
         }
     });
@@ -163,15 +163,14 @@ export function getProjectionOfCell(grids, ribbonIds) {
     });
 }
 
-export function isOverflow(gridIds, grids, ranges, {coord, point}) {
+export function isOverflow(gridIds, grids, {coord, point}) {
     return !gridIds.filter(gridId => {
         return gridId !== coord[0][0] && gridId !== coord[1][0];
     }).every(gridId => {
         const grid = grids.get(gridId);
-        const {firstLineId, lastLineId} = ranges.get(gridId);
         const ribbonId = getRibbonId(grid, point);
         const [minLine, maxLine] = getLineIdsByRibbonId(ribbonId);
-        return firstLineId <= minLine && maxLine <= lastLineId;
+        return grid.firstLineId <= minLine && maxLine <= grid.lastLineId;
     });
 }
 

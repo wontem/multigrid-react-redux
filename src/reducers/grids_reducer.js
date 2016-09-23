@@ -2,10 +2,7 @@ import Immutable from 'immutable';
 import {createReducer} from 'redux_helpers';
 import {ActionTypes, AngleStep} from 'constants/grids_constants';
 
-const initialState = Immutable.Map({
-    grids: Immutable.Map(),
-    ranges: Immutable.Map(),
-});
+const initialState = Immutable.Map();
 
 export default createReducer(initialState, {
     [ActionTypes.CREATE_GRIDS]: createGrids,
@@ -17,7 +14,7 @@ export default createReducer(initialState, {
 
 // TODO: use Immutable
 function setAngle(state, {id, angle}) {
-    return state.updateIn(['grids', id], gridParams => {
+    return state.updateIn([id], gridParams => {
         return {
             ...gridParams,
             phi: angle,
@@ -26,7 +23,7 @@ function setAngle(state, {id, angle}) {
 }
 
 function setShift(state, {id, shift}) {
-    return state.updateIn(['grids', id], gridParams => {
+    return state.updateIn([id], gridParams => {
         return {
             ...gridParams,
             p: shift,
@@ -35,7 +32,7 @@ function setShift(state, {id, shift}) {
 }
 
 function setInterval(state, {id, interval}) {
-    return state.updateIn(['grids', id], gridParams => {
+    return state.updateIn([id], gridParams => {
         return {
             ...gridParams,
             interval: interval,
@@ -44,24 +41,13 @@ function setInterval(state, {id, interval}) {
 }
 
 function addGrid(state, {angle, step, shift, start, end}) {
-    let grids = state.get('grids');
-    let ranges = state.get('ranges');
-    const id = grids.size;
-
-    grids = grids.set(id, {
+    return state.setIn([state.size], {
         phi: angle,
         p: shift,
         interval: step,
-    });
-
-    ranges = ranges.set(id, {
         firstLineId: start,
         lastLineId: end,
     });
-
-    return state
-        .set('grids', grids)
-        .set('ranges', ranges);
 }
 
 function getAngle(angleStep, n, i) {
