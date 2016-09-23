@@ -32,6 +32,7 @@ export default class CanvasTools extends Component {
         return (
             <Group
                 label="Canvas"
+                expanded
             >
                 <Select
                     label="Current layer"
