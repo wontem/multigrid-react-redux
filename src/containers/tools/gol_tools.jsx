@@ -13,16 +13,14 @@ import {intersections, neighbours} from 'selectors/grids_selectors';
 import {randomSeed} from 'selectors/enviroment_selectors';
 
 import {
-    setRandomPopulation,
-    setNextPopulation,
-    clearPopulation,
-} from 'handlers/gol_handlers';
-import {
     setBirth,
     setSurvive,
     setNeighbourhood,
     setRandomSeed,
     setRandomArea,
+    setRandomPopulation,
+    setNextPopulation,
+    clearPopulation,
 } from 'actions/gol_actions';
 
 function getNumbersArray(string) {

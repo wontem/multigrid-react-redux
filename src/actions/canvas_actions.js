@@ -1,5 +1,6 @@
 import {ActionTypes} from 'constants/canvas_constants';
 import {defineAction} from 'redux_helpers';
+import {diff} from 'helpers/math_helpers';
 
 export const translate = defineAction(ActionTypes.TRANSLATE, (x, y) => {
     return {x, y};
@@ -24,3 +25,8 @@ export const setCurrentLayer = defineAction(ActionTypes.SET_LAYER, (layer) => {
 export const setCurrentPoint = defineAction(ActionTypes.SET_POINT, (point) => {
     return {point};
 });
+
+export function dragTranslate(point, prevPoint) {
+    const {x, y} = diff(point, prevPoint);
+    return translate(x, y);
+}

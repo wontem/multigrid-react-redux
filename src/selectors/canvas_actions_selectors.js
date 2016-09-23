@@ -5,8 +5,7 @@ import {Layers} from 'constants/canvas_constants';
 import {addTile} from 'actions/path_actions';
 import {toggleCell} from 'actions/gol_actions';
 import {addAnt} from 'actions/ant_actions';
-import {setCurrentPoint, resize} from 'actions/canvas_actions';
-import {dragTranslate} from 'handlers/canvas_handlers';
+import {setCurrentPoint, resize, dragTranslate} from 'actions/canvas_actions';
 
 const CLICK_ACTIONS = {
     [Layers.PATH]: addTile,
