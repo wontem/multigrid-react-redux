@@ -4,11 +4,21 @@ var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        vendor: [
+            'react',
+            'react-redux',
+            'redux',
+            'immutable',
+            'reselect',
+            'react-dom',
+        ],
+        app: './src/index.js',
+    },
     output: {
         path: path.join(__dirname, 'src/dist'),
         publicPath: '/dist/',
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
     },
     module: {
         loaders: [
@@ -18,7 +28,7 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     plugins: [
-                        ['transform-runtime', {                            
+                        ['transform-runtime', {
                           'polyfill': false,
                           'regenerator': true
                         }],
