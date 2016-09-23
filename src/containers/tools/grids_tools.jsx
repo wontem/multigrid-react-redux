@@ -12,6 +12,8 @@ import {
     setInterval,
     setAngle,
     createGrids,
+    setFirstLine,
+    setLastLine,
 } from 'actions/grids_actions';
 
 import {AngleStep} from 'constants/grids_constants';
@@ -34,11 +36,13 @@ export default class GridsTools extends Component {
             setInterval,
             setAngle,
             createGrids,
+            setFirstLine,
+            setLastLine,
         }, this.props.dispatch);
 
         const gridGroups = gridIds.map(id => {
             const grid = grids.get(id);
-            const {p, phi, interval} = grid;
+            const {p, phi, interval, firstLineId, lastLineId} = grid;
 
             return (
                 <Group
@@ -70,6 +74,24 @@ export default class GridsTools extends Component {
                         min={0}
                         max={1}
                         onChange={shift => actions.setShift({id, shift})}
+
+                    />
+                    <Number
+                        label="First line"
+                        value={firstLineId}
+                        min={-20}
+                        max={lastLineId - 1}
+                        step={1}
+                        onChange={lineId => actions.setFirstLine({id, lineId})}
+
+                    />
+                    <Number
+                        label="Last line"
+                        value={lastLineId}
+                        min={firstLineId + 1}
+                        max={20}
+                        step={1}
+                        onChange={lineId => actions.setLastLine({id, lineId})}
 
                     />
                 </Group>

@@ -10,6 +10,8 @@ export default createReducer(initialState, {
     [ActionTypes.SET_SHIFT]: setShift,
     [ActionTypes.SET_INTERVAL]: setInterval,
     [ActionTypes.SET_ANGLE]: setAngle,
+    [ActionTypes.SET_FIRST_LINE]: setFirstLine,
+    [ActionTypes.SET_LAST_LINE]: setLastLine,
 });
 
 // TODO: use Immutable
@@ -72,4 +74,22 @@ function createGrids(currentState, {grids, shift, angle, lines = 10}) {
         });
     }
     return state;
+}
+
+function setFirstLine(state, {id, lineId}) {
+    return state.updateIn([id], gridParams => {
+        return {
+            ...gridParams,
+            firstLineId: lineId,
+        };
+    });
+}
+
+function setLastLine(state, {id, lineId}) {
+    return state.updateIn([id], gridParams => {
+        return {
+            ...gridParams,
+            lastLineId: lineId,
+        };
+    });
 }

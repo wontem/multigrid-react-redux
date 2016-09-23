@@ -7,6 +7,8 @@ export const ActionTypes = keyMirror([
     'SET_SHIFT',
     'SET_INTERVAL',
     'SET_ANGLE',
+    'SET_FIRST_LINE',
+    'SET_LAST_LINE',
 ], NAMESPACE);
 
 export const Groups = keyMirror([
