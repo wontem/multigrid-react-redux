@@ -293,3 +293,7 @@ export function getEdgeIntersections(neighbours) {
 
     return edgeIntersections;
 }
+
+export function getCenterRibbon(firstLineId, lastLineId) {
+    return Math.floor((lastLineId - firstLineId) / 2) + firstLineId;
+}

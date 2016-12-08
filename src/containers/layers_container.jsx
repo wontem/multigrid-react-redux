@@ -8,21 +8,16 @@ import TilesGroup from 'components/tiles_group';
 import MouseHandler from 'mouse_handler';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {createSelector} from 'reselect';
+import {createStructuredSelector} from 'reselect';
 
 import {currentLayer} from 'selectors/canvas_selectors';
 import {actions} from 'selectors/canvas_actions_selectors';
 
 // TODO: maybe create MouseHandler child class instead
-@connect(createSelector(
-    [actions, currentLayer],
-    (actions, currentLayer) => {
-        return {
-            actions,
-            currentLayer,
-        };
-    }
-))
+@connect(createStructuredSelector({
+    actions,
+    currentLayer,
+}))
 export default class Layers extends PureComponent {
     render() {
         const {resize, ...actions} = bindActionCreators(this.props.actions, this.props.dispatch);

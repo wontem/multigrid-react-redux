@@ -9,11 +9,14 @@ import {LayerComponents} from 'constants/canvas_constants';
 export default class TilesGroup extends PureComponent {
     render() {
         const CurrentLayer = LayerComponents[this.props.currentLayer];
+        const currentLayer = CurrentLayer ? (
+            <CurrentLayer />
+        ) : null;
 
         return (
             <div>
                 <TilesLayer />
-                <CurrentLayer />
+                {currentLayer}
                 <InteractiveTilesLayer />
             </div>
         );

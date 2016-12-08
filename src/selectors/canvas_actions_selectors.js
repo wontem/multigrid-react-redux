@@ -1,21 +1,23 @@
 import {createSelector} from 'reselect';
-import {currentLayer, intersectionId} from 'selectors/canvas_selectors';
+import {currentLayer, intersectionId, itersectionRibbonIds} from 'selectors/canvas_selectors';
 import {Layers} from 'constants/canvas_constants';
 
 import {addTile} from 'actions/path_actions';
 import {toggleCell} from 'actions/gol_actions';
 import {addAnt} from 'actions/ant_actions';
+import {setCenterCell} from 'actions/tiles_actions';
 import {setCurrentPoint, resize, dragTranslate} from 'actions/canvas_actions';
 
 const CLICK_ACTIONS = {
+    [Layers.TILES]: setCenterCell,
     [Layers.PATH]: addTile,
     [Layers.GOL]: toggleCell,
     [Layers.ANT]: addAnt,
 };
 
 export const actions = createSelector(
-    [currentLayer, intersectionId],
-    (currentLayer, intersectionId) => {
+    [currentLayer, intersectionId, itersectionRibbonIds],
+    (currentLayer, intersectionId, itersectionRibbonIds) => {
         const clickAction = CLICK_ACTIONS[currentLayer];
         const actions = {
             move: setCurrentPoint,
@@ -24,7 +26,7 @@ export const actions = createSelector(
         };
 
         if (clickAction) {
-            actions['click'] = () => clickAction(intersectionId);
+            actions['click'] = () => clickAction(intersectionId, itersectionRibbonIds);
         }
 
         return actions;

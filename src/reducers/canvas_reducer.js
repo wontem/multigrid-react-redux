@@ -13,7 +13,7 @@ export default createReducer(Immutable.Map({
     linesScale: 20,
     linesTranslate: {x: 0, y: 0},
     currentGroup: Groups.LINES,
-    currentLayer: Layers.GOL,
+    currentLayer: Layers.TILES,
     currentPoint: {x: 0, y: 0},
 }), type => {
     switch (type) {

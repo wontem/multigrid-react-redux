@@ -15,6 +15,7 @@ export const ActionTypes = keyMirror([
 ], 'canvas');
 
 export const Layers = keyMirror([
+    'TILES',
     'GOL',
     'PATH',
     'MAZE',

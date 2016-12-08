@@ -37,6 +37,7 @@ export default class CanvasTools extends Component {
                 <Select
                     label="Current layer"
                     values={{
+                        [Layers.TILES]: 'Tiles',
                         [Layers.GOL]: 'Game of life',
                         [Layers.PATH]: 'Path',
                         [Layers.MAZE]: 'Maze',

@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 import {createReducer} from 'redux_helpers';
 import {ActionTypes, AngleStep} from 'constants/grids_constants';
+import {getCenterRibbon} from 'helpers/grids_helpers';
 
 const initialState = Immutable.Map();
 
@@ -12,6 +13,7 @@ export default createReducer(initialState, {
     [ActionTypes.SET_ANGLE]: setAngle,
     [ActionTypes.SET_FIRST_LINE]: setFirstLine,
     [ActionTypes.SET_LAST_LINE]: setLastLine,
+    [ActionTypes.SET_CENTER_CELL]: setCenterCell,
 });
 
 // TODO: use Immutable
@@ -90,6 +92,22 @@ function setLastLine(state, {id, lineId}) {
         return {
             ...gridParams,
             lastLineId: lineId,
+        };
+    });
+}
+
+function setCenterCell(state, {ribbonIds}) {
+    const ribbonIdsMap = new Map(ribbonIds);
+    return state.map((gridParams, id) => {
+        const {firstLineId, lastLineId} = gridParams;
+        const centerRibbonId = ribbonIdsMap.get(id);
+        const currentCenterRibbonId = getCenterRibbon(lastLineId, firstLineId);
+        const shift = centerRibbonId - currentCenterRibbonId;
+
+        return {
+            ...gridParams,
+            firstLineId: firstLineId + shift,
+            lastLineId: lastLineId + shift,
         };
     });
 }

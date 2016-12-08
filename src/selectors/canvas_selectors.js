@@ -81,6 +81,13 @@ export const cellId = createSelector(
     }
 );
 
+export const itersectionRibbonIds = createSelector(
+    [pointOnLines, grids, gridIds],
+    (pointOnLines, grids, gridIds) => {
+        return getRibbonIds(grids, gridIds, pointOnLines);
+    }
+);
+
 export const intersectionId = createSelector(
     [grids, gridIds, graph, intersections, tiles, pointOnLines],
     (grids, gridIds, graph, intersections, tiles, point) => {
