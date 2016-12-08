@@ -1,8 +1,9 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes} from 'react';
+import Variable from './_Variable';
 import {Row, Label, Input, Confirm} from '../common';
 
 //TODO: add prop for custorm validation
-export default class String extends Component {
+export default class String extends Variable {
     static propTypes = {
         value: PropTypes.string.isRequired,
         label: PropTypes.string,
@@ -64,7 +65,7 @@ export default class String extends Component {
 
     render() {
         const {label} = this.props;
-        const {inputValue, currentValue} = this.state;
+        const {inputValue} = this.state;
 
         return (
             <Row>
@@ -74,11 +75,7 @@ export default class String extends Component {
                     onChange={this.handleChange}
                     onConfirm={this.resolve}
                 />
-                <Confirm
-                    isChanged={this.isChanged()}
-                    onConfirm={this.resolve}
-                    onDiscard={this.reject}
-                >{`${currentValue}`}</Confirm>
+                {this.getConfirmComponent()}
             </Row>
         );
     }

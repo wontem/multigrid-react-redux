@@ -1,7 +1,8 @@
-import React, {PropTypes, Component} from 'react';
-import {Row, Label, CheckBox as _CheckBox, Confirm} from '../common';
+import React, {PropTypes} from 'react';
+import Variable from './_Variable';
+import {Row, Label, CheckBox as _CheckBox} from '../common';
 
-export default class CheckBox extends Component {
+export default class CheckBox extends Variable {
     static propTypes = {
         value: PropTypes.bool.isRequired,
         label: PropTypes.string,
@@ -65,7 +66,7 @@ export default class CheckBox extends Component {
 
     render() {
         const {label} = this.props;
-        const {inputValue, currentValue} = this.state;
+        const {inputValue} = this.state;
 
         return (
             <Row>
@@ -75,11 +76,7 @@ export default class CheckBox extends Component {
                     onChange={this.handleChange}
                     onConfirm={this.resolve}
                 />
-                <Confirm
-                    isChanged={this.isChanged()}
-                    onConfirm={this.resolve}
-                    onDiscard={this.reject}
-                >{`${currentValue}`}</Confirm>
+                {this.getConfirmComponent()}
             </Row>
         );
     }

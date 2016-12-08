@@ -1,4 +1,5 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes} from 'react';
+import Variable from './_Variable';
 import {Row, Label, TrackBar, Input, Confirm} from '../common';
 
 function numDecimals(value) {
@@ -64,7 +65,7 @@ function getStep(step, value) {
     return step;
 }
 
-export default class Number extends Component {
+export default class Number extends Variable {
     static propTypes = {
         value: PropTypes.number.isRequired,
         step: PropTypes.number,
@@ -175,7 +176,7 @@ export default class Number extends Component {
 
     render() {
         const {min, max, label} = this.props;
-        const {inputValue, lastValid, currentValue, isValid} = this.state;
+        const {inputValue, lastValid, isValid} = this.state;
 
         let trackBar;
 
@@ -201,11 +202,7 @@ export default class Number extends Component {
                     onConfirm={this.resolve}
                     onBlur={this.setLastValid}
                 />
-                <Confirm
-                    isChanged={this.isChanged()}
-                    onConfirm={this.resolve}
-                    onDiscard={this.reject}
-                >{`${currentValue}`}</Confirm>
+                {this.getConfirmComponent()}
             </Row>
         );
     }

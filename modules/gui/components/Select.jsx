@@ -1,7 +1,8 @@
-import React, {PropTypes, Component} from 'react';
-import {Row, Label, Select as _Select, Confirm} from '../common';
+import React, {PropTypes} from 'react';
+import Variable from './_Variable';
+import {Row, Label, Select as _Select} from '../common';
 
-export default class CheckBox extends Component {
+export default class Select extends Variable {
     static propTypes = {
         values: PropTypes.oneOfType([
             PropTypes.array,
@@ -122,9 +123,13 @@ export default class CheckBox extends Component {
         });
     }
 
+    stringifyCurrentValue() {
+        return this.state.currentValue.map(value => this.props.values[value]).join(', ');
+    }
+
     render() {
         const {label, values} = this.props;
-        const {inputValue, currentValue, expanded} = this.state;
+        const {inputValue, expanded} = this.state;
 
         return (
             <Row>
@@ -137,11 +142,7 @@ export default class CheckBox extends Component {
                     values={values}
                     selected={inputValue}
                 />
-                <Confirm
-                    isChanged={this.isChanged()}
-                    onConfirm={this.resolve}
-                    onDiscard={this.reject}
-                >{`${currentValue.length}`}</Confirm>
+                {this.getConfirmComponent()}
             </Row>
         );
     }
