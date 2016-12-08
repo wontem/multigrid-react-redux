@@ -21,7 +21,8 @@ import {
 
 import {NAMESPACE} from 'constants/grids_constants';
 
-export const grids = state => state[NAMESPACE];
+export const grids = state => state[NAMESPACE].get('gridParams');
+export const shouldOverflow = state => state[NAMESPACE].get('shouldOverflow');
 
 export const gridIds = createSelector([grids], grids => {
     return [...grids.keys()];
@@ -32,16 +33,14 @@ export const unitVectors = createSelector([grids], grids => grids.map(getUnitVec
 export const lines = createSelector(
     [grids],
     (grids) => {
-        return grids.map((grid, gridId) => {
-            return getLines(grid);
-        });
+        return grids.map(grid => getLines(grid));
     }
 );
 
 
 export const intersections = createSelector(
-    [gridIds, unitVectors, lines, grids],
-    (gridIds, unitVectors, lines, grids) => {
+    [gridIds, unitVectors, lines, grids, shouldOverflow],
+    (gridIds, unitVectors, lines, grids, shouldOverflow) => {
         console.time('intersections');
         const intersections = Immutable.Map().withMutations(intersections => {
             eachPairOfArray(gridIds, (gridId1, gridId2) => {
@@ -62,7 +61,7 @@ export const intersections = createSelector(
                             point,
                         };
 
-                        if (!isOverflow(gridIds, grids, intersection)) {
+                        if (shouldOverflow || !isOverflow(gridIds, grids, intersection)) {
                             intersections.set(getId(coord), intersection);
                         }
                     }

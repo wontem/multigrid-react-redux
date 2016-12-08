@@ -3,7 +3,10 @@ import {createReducer} from 'redux_helpers';
 import {ActionTypes, AngleStep} from 'constants/grids_constants';
 import {getCenterRibbon} from 'helpers/grids_helpers';
 
-const initialState = Immutable.Map();
+const initialState = Immutable.Map({
+    gridParams: Immutable.Map(),
+    shouldOverflow: true,
+});
 
 export default createReducer(initialState, {
     [ActionTypes.CREATE_GRIDS]: createGrids,
@@ -14,11 +17,12 @@ export default createReducer(initialState, {
     [ActionTypes.SET_FIRST_LINE]: setFirstLine,
     [ActionTypes.SET_LAST_LINE]: setLastLine,
     [ActionTypes.SET_CENTER_CELL]: setCenterCell,
+    [ActionTypes.SET_OVERFLOW]: setOverflow,
 });
 
 // TODO: use Immutable
 function setAngle(state, {id, angle}) {
-    return state.updateIn([id], gridParams => {
+    return state.updateIn(['gridParams', id], gridParams => {
         return {
             ...gridParams,
             phi: angle,
@@ -27,7 +31,7 @@ function setAngle(state, {id, angle}) {
 }
 
 function setShift(state, {id, shift}) {
-    return state.updateIn([id], gridParams => {
+    return state.updateIn(['gridParams', id], gridParams => {
         return {
             ...gridParams,
             p: shift,
@@ -36,7 +40,7 @@ function setShift(state, {id, shift}) {
 }
 
 function setInterval(state, {id, interval}) {
-    return state.updateIn([id], gridParams => {
+    return state.updateIn(['gridParams', id], gridParams => {
         return {
             ...gridParams,
             interval: interval,
@@ -45,7 +49,7 @@ function setInterval(state, {id, interval}) {
 }
 
 function addGrid(state, {angle, step, shift, start, end}) {
-    return state.setIn([state.size], {
+    return state.setIn(['gridParams', state.get('gridParams').size], {
         phi: angle,
         p: shift,
         interval: step,
@@ -79,7 +83,7 @@ function createGrids(currentState, {grids, shift, angle, lines = 10}) {
 }
 
 function setFirstLine(state, {id, lineId}) {
-    return state.updateIn([id], gridParams => {
+    return state.updateIn(['gridParams', id], gridParams => {
         return {
             ...gridParams,
             firstLineId: lineId,
@@ -88,7 +92,7 @@ function setFirstLine(state, {id, lineId}) {
 }
 
 function setLastLine(state, {id, lineId}) {
-    return state.updateIn([id], gridParams => {
+    return state.updateIn(['gridParams', id], gridParams => {
         return {
             ...gridParams,
             lastLineId: lineId,
@@ -98,16 +102,22 @@ function setLastLine(state, {id, lineId}) {
 
 function setCenterCell(state, {ribbonIds}) {
     const ribbonIdsMap = new Map(ribbonIds);
-    return state.map((gridParams, id) => {
-        const {firstLineId, lastLineId} = gridParams;
-        const centerRibbonId = ribbonIdsMap.get(id);
-        const currentCenterRibbonId = getCenterRibbon(lastLineId, firstLineId);
-        const shift = centerRibbonId - currentCenterRibbonId;
+    return state.updateIn(['gridParams'], gridParams => {
+        return gridParams.map((gridParams, id) => {
+            const {firstLineId, lastLineId} = gridParams;
+            const centerRibbonId = ribbonIdsMap.get(id);
+            const currentCenterRibbonId = getCenterRibbon(lastLineId, firstLineId);
+            const shift = centerRibbonId - currentCenterRibbonId;
 
-        return {
-            ...gridParams,
-            firstLineId: firstLineId + shift,
-            lastLineId: lastLineId + shift,
-        };
+            return {
+                ...gridParams,
+                firstLineId: firstLineId + shift,
+                lastLineId: lastLineId + shift,
+            };
+        });
     });
+}
+
+function setOverflow(state, {shouldOverflow}) {
+    return state.set('shouldOverflow', shouldOverflow);
 }

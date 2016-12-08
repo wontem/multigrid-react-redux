@@ -10,6 +10,7 @@ export const ActionTypes = keyMirror([
     'SET_FIRST_LINE',
     'SET_LAST_LINE',
     'SET_CENTER_CELL',
+    'SET_OVERFLOW',
 ], NAMESPACE);
 
 export const Groups = keyMirror([

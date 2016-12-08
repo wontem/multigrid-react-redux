@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Group, Number} from 'gui';
+import {Group, Number, CheckBox} from 'gui';
 import GridsGenTool from 'containers/tools/grids_gen_tool';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {createSelector} from 'reselect';
+import {createStructuredSelector} from 'reselect';
 
-import {grids, gridIds} from 'selectors/grids_selectors';
+import {grids, gridIds, shouldOverflow} from 'selectors/grids_selectors';
 import {getGridColor} from 'helpers/grids_helpers';
 import {
     setShift,
@@ -14,22 +14,22 @@ import {
     createGrids,
     setFirstLine,
     setLastLine,
+    setOverflow,
 } from 'actions/grids_actions';
 
 import {AngleStep} from 'constants/grids_constants';
 
-@connect(createSelector(
-    [grids, gridIds],
-    (grids, gridIds) => ({
-        grids,
-        gridIds,
-    })
-))
+@connect(createStructuredSelector({
+    grids,
+    gridIds,
+    shouldOverflow,
+}))
 export default class GridsTools extends Component {
     render() {
         const {
             grids,
             gridIds,
+            shouldOverflow,
         } = this.props;
         const actions = bindActionCreators({
             setShift,
@@ -38,6 +38,7 @@ export default class GridsTools extends Component {
             createGrids,
             setFirstLine,
             setLastLine,
+            setOverflow,
         }, this.props.dispatch);
 
         const gridGroups = gridIds.map(id => {
@@ -102,6 +103,11 @@ export default class GridsTools extends Component {
             <Group
                 label="Grids"
             >
+                <CheckBox
+                    label="Should overflow"
+                    value={shouldOverflow}
+                    onChange={actions.setOverflow}
+                />
                 <GridsGenTool
                     onClick={actions.createGrids}
                     angle={AngleStep.AUTO}
