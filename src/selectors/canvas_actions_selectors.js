@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {currentLayer, intersectionId, itersectionRibbonIds} from 'selectors/canvas_selectors';
+import {currentLayer, intersectionId, currentRibbonIds} from 'selectors/canvas_selectors';
 import {Layers} from 'constants/canvas_constants';
 
 import {addTile} from 'actions/path_actions';
@@ -16,8 +16,8 @@ const CLICK_ACTIONS = {
 };
 
 export const actions = createSelector(
-    [currentLayer, intersectionId, itersectionRibbonIds],
-    (currentLayer, intersectionId, itersectionRibbonIds) => {
+    [currentLayer, intersectionId, currentRibbonIds],
+    (currentLayer, intersectionId, currentRibbonIds) => {
         const clickAction = CLICK_ACTIONS[currentLayer];
         const actions = {
             move: setCurrentPoint,
@@ -26,7 +26,7 @@ export const actions = createSelector(
         };
 
         if (clickAction) {
-            actions['click'] = () => clickAction(intersectionId, itersectionRibbonIds);
+            actions['click'] = () => clickAction(intersectionId, currentRibbonIds);
         }
 
         return actions;

@@ -63,11 +63,17 @@ export const pointOnLines = createSelector(
     }
 );
 
-export const pointOnTiles = createSelector(
+export const currentRibbonIds = createSelector(
     [pointOnLines, grids, gridIds],
     (pointOnLines, grids, gridIds) => {
-        const ribbonIds = getRibbonIds(grids, gridIds, pointOnLines);
-        return getProjectionOfCell(grids, ribbonIds);
+        return getRibbonIds(grids, gridIds, pointOnLines);
+    }
+);
+
+export const pointOnTiles = createSelector(
+    [currentRibbonIds, grids],
+    (currentRibbonIds, grids) => {
+        return getProjectionOfCell(grids, currentRibbonIds);
     }
 );
 
@@ -78,13 +84,6 @@ export const cellId = createSelector(
         const cellId = getId(ribbonIds);
 
         return cellCoords.has(cellId) ? cellId : null;
-    }
-);
-
-export const itersectionRibbonIds = createSelector(
-    [pointOnLines, grids, gridIds],
-    (pointOnLines, grids, gridIds) => {
-        return getRibbonIds(grids, gridIds, pointOnLines);
     }
 );
 

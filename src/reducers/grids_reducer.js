@@ -5,7 +5,7 @@ import {getCenterRibbon} from 'helpers/grids_helpers';
 
 const initialState = Immutable.Map({
     gridParams: Immutable.Map(),
-    shouldOverflow: true,
+    shouldOverflow: false,
 });
 
 export default createReducer(initialState, {

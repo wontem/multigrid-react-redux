@@ -1,32 +1,29 @@
 import {Layer} from 'shared/components/canvas';
 import {getLinePoints, summate} from 'helpers/math_helpers';
-import {getLine, getLineIdsByRibbonId, getRibbonIds, getGridColor} from 'helpers/grids_helpers';
+import {getLine, getLineIdsByRibbonId, getGridColor} from 'helpers/grids_helpers';
 import {canvasTransform} from 'helpers/canvas_helpers';
 
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
 
 import {grids, gridIds} from 'selectors/grids_selectors';
-import {linesTransform, pointOnLines, size} from 'selectors/canvas_selectors';
+import {linesTransform, currentRibbonIds, size} from 'selectors/canvas_selectors';
 
 @connect(createSelector(
-    [grids, gridIds, linesTransform, pointOnLines, size],
-    (grids, gridIds, linesTransform, pointOnLines, size) => ({
+    [grids, gridIds, linesTransform, currentRibbonIds, size],
+    (grids, gridIds, linesTransform, currentRibbonIds, size) => ({
         ...size, grids, gridIds,
         transform: linesTransform,
-        //TODO: bottleneck. need create selector which will return ribbonIds
-        point: pointOnLines,
+        currentRibbons: currentRibbonIds,
     })
 ))
 export default class InteractiveLinesLayer extends Layer {
     clearAndDraw() {
         const ctx = this.ctx;
-        const {grids, gridIds, point} = this.props;
+        const {grids, currentRibbons} = this.props;
         const {width, height} = this.props;
 
         canvasTransform(ctx, this.props.transform);
-
-        const currentRibbons = getRibbonIds(grids, gridIds, point);
 
         currentRibbons.forEach(([gridId, ribbonId]) => {
             const grid = grids.get(gridId);

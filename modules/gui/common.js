@@ -9,3 +9,4 @@ export {default as Button} from './components/common/Button';
 export {default as Select} from './components/common/Select';
 export {default as Text} from './components/common/Text';
 export {default as KeyHandler} from './components/common/KeyHandler';
+export {default as ColorBlock} from './components/common/ColorBlock';

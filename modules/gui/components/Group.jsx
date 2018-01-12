@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
+import {ColorBlock} from '../common';
 
 export default class Group extends Component {
     static propTypes = {
@@ -40,12 +41,7 @@ export default class Group extends Component {
 
         if (color) {
             colorBlock = (
-                <div
-                    className="color"
-                    style={{
-                        backgroundColor: color,
-                    }}
-                ></div>
+                <ColorBlock color={color} />
             );
         }
 

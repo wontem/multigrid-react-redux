@@ -104,7 +104,7 @@ export default class GridsTools extends Component {
                 label="Grids"
             >
                 <CheckBox
-                    label="Should overflow"
+                    label="Overflow"
                     value={shouldOverflow}
                     onChange={actions.setOverflow}
                 />
