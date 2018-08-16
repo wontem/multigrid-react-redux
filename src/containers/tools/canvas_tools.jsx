@@ -42,6 +42,7 @@ export default class CanvasTools extends Component {
                         [Layers.PATH]: 'Path',
                         [Layers.MAZE]: 'Maze',
                         [Layers.ANT]: 'Turmites',
+                        [Layers.WALK]: 'Walk',
                     }}
                     selected={currentLayer}
                     onChange={actions.setCurrentLayer}

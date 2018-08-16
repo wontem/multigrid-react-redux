@@ -7,6 +7,7 @@ import ant from 'reducers/ant_reducer';
 import gol from 'reducers/gol_reducer';
 import path from 'reducers/path_reducer';
 import maze from 'reducers/maze_reducer';
+import walk from 'reducers/walk_reducer';
 
 import {NAMESPACE as gridsNS} from 'constants/grids_constants';
 
@@ -18,4 +19,5 @@ export default createCombinedReducer({
     ant,
     path,
     maze,
+    walk,
 });

@@ -78,22 +78,18 @@ export const pointOnTiles = createSelector(
 );
 
 export const cellId = createSelector(
-    [grids, gridIds, cellCoords, currentPoint],
-    (grids, gridIds, cellCoords, currentPoint) => {
-        const ribbonIds = getRibbonIds(grids, gridIds, currentPoint);
-        const cellId = getId(ribbonIds);
+    [graph, currentRibbonIds],
+    (graph, currentRibbonIds) => {
+        const cellId = getId(currentRibbonIds);
 
-        return cellCoords.has(cellId) ? cellId : null;
+        return graph.cells.has(cellId) ? cellId : null;
     }
 );
 
 export const intersectionId = createSelector(
-    [grids, gridIds, graph, intersections, tiles, pointOnLines],
-    (grids, gridIds, graph, intersections, tiles, point) => {
-        const ribbonIds = getRibbonIds(grids, gridIds, point);
-        const cellId = getId(ribbonIds);
-
-        if (!graph.cells.has(cellId)) {
+    [graph, intersections, tiles, pointOnLines, cellId],
+    (graph, intersections, tiles, pointOnLines, cellId) => {
+        if (!cellId) {
             return null;
         }
 
@@ -102,7 +98,7 @@ export const intersectionId = createSelector(
             return intersections.get(intersectionId).point;
         });
         const magnitudes = intersectionPoints.map(intersectionPoint => {
-            const difference = diff(intersectionPoint, point);
+            const difference = diff(intersectionPoint, pointOnLines);
             return toPolar(difference).p;
         });
         // TODO: rewrite using indexes

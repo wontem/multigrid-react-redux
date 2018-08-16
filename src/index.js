@@ -24,6 +24,9 @@ window.store = store;
 import {createGrids} from 'actions/grids_actions';
 import {AngleStep} from 'constants/grids_constants';
 
+import * as walkSelectors from 'selectors/walk_selectors';
+window.walkSelectors = walkSelectors;
+
 store.dispatch(createGrids({
     grids: 5,
     lines: 10,

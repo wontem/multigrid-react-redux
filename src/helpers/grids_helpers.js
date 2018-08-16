@@ -3,14 +3,14 @@ import {
     toPolar,
     toCartesian,
     sum,
-    summate,
+    // summate,
     getMinAngleBetween,
 } from 'helpers/math_helpers';
 import {
-    eachPairOfArray,
+    // eachPairOfArray,
     pairsComparator,
 } from 'helpers/collections_helpers';
-import {getId} from 'helpers/id_helpers';
+// import {getId} from 'helpers/id_helpers';
 
 export function getUnitVector({phi}) {
     return toCartesian({
